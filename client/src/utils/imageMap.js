@@ -1,4 +1,5 @@
 import penBook from '../assets/images/aaron-burden-CKlHKtCJZKk-unsplash.jpg';
+import galaxy from '../assets/images/andy-holmes-rCbdp8VCYhQ-unsplash.jpg';
 import treeBig from '../assets/images/jeremy-bishop-EwKXn5CapA4-unsplash.jpg';
 import treeSmall from '../assets/images/federico-velazco-HpfuWSHGy1M-unsplash.jpg';
 import fireBig from '../assets/images/tobias-rademacher-wnF27F85ZKw-unsplash.jpg';
@@ -49,6 +50,7 @@ export const bgImages = {
   stonesColor,
   lake,
   penBook,
+  galaxy,
 };
 
 export const cardImages = {
