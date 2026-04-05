@@ -18,10 +18,6 @@ export default function SajuInputPage() {
   const [hour, setHour] = useState(12);
   const [loading, setLoading] = useState(false);
 
-  const years = Array.from({ length: 101 }, (_, i) => 1940 + i);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
-
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -64,20 +60,15 @@ export default function SajuInputPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-35" alt="" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-30" alt="" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center px-8">
-          <div className="w-20 h-20 mx-auto mb-8 relative">
-            <div className="absolute inset-0 border-2 border-amber-400/20 rounded-full animate-ping" style={{animationDuration:'2s'}} />
-            <div className="absolute inset-2 border-2 border-amber-400/30 rounded-full animate-ping" style={{animationDuration:'2.5s'}} />
-            <div className="absolute inset-4 border-2 border-amber-400/50 rounded-full animate-spin" style={{animationDuration:'3s'}} />
-            <div className="absolute inset-0 flex items-center justify-center text-3xl">☰</div>
-          </div>
-          <p className="text-amber-400/80 text-lg tracking-[0.3em] mb-3">운명을 풀어보는 중...</p>
-          <p className="text-white/30 text-sm">사주팔자를 분석하고 있습니다</p>
-          <div className="flex justify-center gap-1 mt-6">
+          <div className="w-16 h-16 mx-auto mb-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+          <p className="text-white text-lg font-bold tracking-wide mb-2">운명을 풀어보는 중...</p>
+          <p className="text-white/40 text-sm font-light">사주팔자를 분석하고 있습니다</p>
+          <div className="flex justify-center gap-2 mt-8">
             {['목','화','토','금','수'].map((oh,i) => (
-              <div key={oh} className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/10 animate-pulse" style={{animationDelay:`${i*0.3}s`}}>
+              <div key={oh} className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/15 animate-pulse" style={{animationDelay:`${i*0.3}s`}}>
                 <img src={ohengImage[oh]} className="w-full h-full object-cover" alt="" />
               </div>
             ))}
@@ -87,85 +78,92 @@ export default function SajuInputPage() {
     );
   }
 
+  const inputClass = "w-full py-3 px-4 bg-white/[0.06] border border-white/10 rounded-xl text-white text-sm text-center focus:outline-none focus:border-white/30 transition";
+  const labelClass = "text-xs tracking-wide text-white/40 block mb-3 font-medium";
+  const toggleActive = "bg-white text-black font-semibold shadow-lg";
+  const toggleInactive = "bg-white/[0.04] text-white/40 border border-white/8 hover:border-white/15";
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-[500px] md:max-w-[640px] lg:max-w-[720px] w-full rounded-[2rem] overflow-hidden relative">
-        <img src={bgImages.input} className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ filter: 'blur(1px)' }} alt="" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
-        <div className="relative z-10 p-8">
-          <Link to="/" className="text-amber-400/30 text-sm mb-8 block hover:text-amber-400/60 transition">‹ 뒤로</Link>
-          <div className="flex gap-1.5 rounded-xl overflow-hidden mb-10 h-16 opacity-70">
-            {['목','화','토','금','수'].map(oh => (
-              <div key={oh} className="flex-1 overflow-hidden">
-                <img src={ohengImage[oh]} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt={oh} />
-              </div>
-            ))}
-          </div>
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-white/90 mb-2">사주 정보 입력</h2>
-            <p className="text-xs text-white/25 tracking-wider">당신의 오행을 찾아드립니다</p>
-          </div>
-          <div className="mb-6">
-            <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">이름</label>
+    <div className="min-h-screen flex items-center justify-center p-4 md:p-8">
+      <div className="max-w-[500px] md:max-w-[640px] lg:max-w-[720px] w-full">
+        <Link to="/" className="text-white/30 text-sm mb-8 block hover:text-white/60 transition font-light">← 뒤로</Link>
+
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">사주 정보 입력</h2>
+          <p className="text-sm text-white/35 font-light">당신의 오행을 찾아드립니다</p>
+        </div>
+
+        <div className="space-y-6">
+          {/* 이름 */}
+          <div>
+            <label className={labelClass}>이름</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="이름을 입력하세요"
-              className="w-full py-3 px-4 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm focus:outline-none focus:border-amber-400/40 transition placeholder-white/20" />
+              className="w-full py-3 px-4 bg-white/[0.06] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-white/30 transition placeholder-white/20" />
           </div>
-          <div className="mb-6">
-            <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">성별</label>
-            <div className="grid grid-cols-2 gap-2">
+
+          {/* 성별 */}
+          <div>
+            <label className={labelClass}>성별</label>
+            <div className="grid grid-cols-2 gap-3">
               {['남','여'].map(g => (
-                <button key={g} onClick={() => setGender(g)} className={`py-3 text-center rounded-xl text-sm cursor-pointer transition ${gender === g ? 'bg-amber-400/90 text-black font-semibold shadow-lg shadow-amber-400/10' : 'bg-white/[0.03] text-white/40 border border-white/5 hover:border-white/10'}`}>{g}성</button>
+                <button key={g} onClick={() => setGender(g)}
+                  className={`py-3 text-center rounded-xl text-sm cursor-pointer transition-all ${gender === g ? toggleActive : toggleInactive}`}>{g}성</button>
               ))}
             </div>
           </div>
-          <div className="mb-6">
-            <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">달력</label>
-            <div className="grid grid-cols-2 gap-2">
+
+          {/* 달력 */}
+          <div>
+            <label className={labelClass}>달력</label>
+            <div className="grid grid-cols-2 gap-3">
               {['양력','음력'].map(t => (
-                <button key={t} onClick={() => setCalendarType(t)} className={`py-3 text-center rounded-xl text-sm cursor-pointer transition ${calendarType === t ? 'bg-amber-400/90 text-black font-semibold shadow-lg shadow-amber-400/10' : 'bg-white/[0.03] text-white/40 border border-white/5 hover:border-white/10'}`}>{t}</button>
+                <button key={t} onClick={() => setCalendarType(t)}
+                  className={`py-3 text-center rounded-xl text-sm cursor-pointer transition-all ${calendarType === t ? toggleActive : toggleInactive}`}>{t}</button>
               ))}
             </div>
           </div>
-          <div className="mb-6">
-            <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">생년월일</label>
-            <div className="grid grid-cols-3 gap-2">
+
+          {/* 생년월일 */}
+          <div>
+            <label className={labelClass}>생년월일</label>
+            <div className="grid grid-cols-3 gap-3">
               <div className="relative">
-                <input type="number" min="1940" max="2040" value={year} onChange={e => setYear(Number(e.target.value))}
-                  className="w-full py-3 px-3 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40 transition" />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/30 text-xs pointer-events-none">년</span>
+                <input type="number" min="1940" max="2040" value={year} onChange={e => setYear(Number(e.target.value))} className={inputClass} />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 text-xs pointer-events-none">년</span>
               </div>
               <div className="relative">
-                <input type="number" min="1" max="12" value={month} onChange={e => setMonth(Math.min(12, Math.max(1, Number(e.target.value))))}
-                  className="w-full py-3 px-3 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40 transition" />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/30 text-xs pointer-events-none">월</span>
+                <input type="number" min="1" max="12" value={month} onChange={e => setMonth(Math.min(12, Math.max(1, Number(e.target.value))))} className={inputClass} />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 text-xs pointer-events-none">월</span>
               </div>
               <div className="relative">
-                <input type="number" min="1" max="31" value={day} onChange={e => setDay(Math.min(31, Math.max(1, Number(e.target.value))))}
-                  className="w-full py-3 px-3 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40 transition" />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/30 text-xs pointer-events-none">일</span>
+                <input type="number" min="1" max="31" value={day} onChange={e => setDay(Math.min(31, Math.max(1, Number(e.target.value))))} className={inputClass} />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 text-xs pointer-events-none">일</span>
               </div>
             </div>
           </div>
-          <div className="mb-10">
-            <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">태어난 시간</label>
+
+          {/* 시간 */}
+          <div>
+            <label className={labelClass}>태어난 시간</label>
             <div className="grid grid-cols-4 gap-2">
               {SIJI_OPTIONS.map(s => {
                 const timeRange = s.label.match(/\((.+)\)/)?.[1] || '';
                 return (
                   <button key={s.value} onClick={() => setHour(s.value)}
-                    className={`py-3 px-1 rounded-xl text-center transition ${
-                      hour === s.value
-                        ? 'bg-amber-400/90 text-black font-semibold shadow-lg shadow-amber-400/10'
-                        : 'bg-[#1a1610] text-white/50 border border-amber-400/10 hover:border-amber-400/30'
+                    className={`py-2.5 px-1 rounded-xl text-center transition-all ${
+                      hour === s.value ? toggleActive : toggleInactive
                     }`}>
                     <div className="text-sm">{s.label.split(' ')[0]}</div>
-                    <div className={`text-[10px] mt-0.5 ${hour === s.value ? 'text-black/60' : 'text-white/25'}`}>{timeRange}</div>
+                    <div className={`text-[10px] mt-0.5 ${hour === s.value ? 'text-black/50' : 'text-white/20'}`}>{timeRange}</div>
                   </button>
                 );
               })}
             </div>
           </div>
-          <button onClick={handleSubmit} className="shimmer w-full py-4 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-black rounded-2xl font-bold text-base tracking-[0.15em] shadow-2xl shadow-amber-500/20 hover:shadow-amber-500/30 transition-shadow">
+
+          {/* 제출 */}
+          <button onClick={handleSubmit}
+            className="w-full py-4 mt-4 bg-white text-black rounded-2xl font-bold text-base tracking-wide hover:bg-white/90 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             사주 풀이 시작
           </button>
         </div>

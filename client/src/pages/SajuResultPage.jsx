@@ -87,7 +87,7 @@ function CardModal({ card, content, onClose, name }) {
 
       {/* 모달 카드 */}
       <div
-        className="relative w-full max-w-[500px] lg:max-w-[600px] max-h-[85vh] rounded-2xl overflow-hidden border-2 border-amber-400/30 shadow-[0_0_60px_rgba(196,168,98,0.15)] animate-[scaleIn_0.3s_ease-out]"
+        className="relative w-full max-w-[500px] lg:max-w-[600px] max-h-[85vh] rounded-2xl overflow-hidden border-2 border-white/30 shadow-[0_0_60px_rgba(196,168,98,0.15)] animate-[scaleIn_0.3s_ease-out]"
         onClick={e => e.stopPropagation()}
       >
         {/* 이미지 헤더 */}
@@ -96,14 +96,14 @@ function CardModal({ card, content, onClose, name }) {
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#0e0c08]" />
 
           {/* 프레임 */}
-          <div className="absolute inset-3 border border-amber-400/20 rounded-xl" />
+          <div className="absolute inset-3 border border-white/20 rounded-xl" />
 
           {/* 닫기 버튼 */}
           <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition text-sm">✕</button>
 
           {/* 타이틀 */}
           <div className="absolute bottom-5 left-6 right-6">
-            <p className="text-[10px] tracking-[0.4em] text-amber-300/50 mb-1">{card.subtitle}</p>
+            <p className="text-[10px] tracking-[0.4em] text-white/50 mb-1">{card.subtitle}</p>
             <h2 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">{card.title}</h2>
           </div>
         </div>
@@ -117,7 +117,7 @@ function CardModal({ card, content, onClose, name }) {
                   if (line.startsWith('• ')) {
                     return (
                       <div key={i} className="flex gap-3 text-[15px] text-white/60 leading-[1.8]">
-                        <span className="text-amber-400/40 shrink-0 mt-1">◆</span>
+                        <span className="text-white/40 shrink-0 mt-1">◆</span>
                         <span>{line.slice(2)}</span>
                       </div>
                     );
@@ -140,24 +140,24 @@ function TarotCard({ card, onClick }) {
 
   return (
     <div className="cursor-pointer group" onClick={onClick}>
-      <div className="w-full rounded-2xl overflow-hidden border-2 border-amber-400/20 shadow-2xl hover:shadow-[0_0_40px_rgba(196,168,98,0.1)] transition-all duration-500 hover:-translate-y-2" style={{ aspectRatio: '2/3' }}>
+      <div className="w-full rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl hover:shadow-[0_0_40px_rgba(196,168,98,0.1)] transition-all duration-500 hover:-translate-y-2" style={{ aspectRatio: '2/3' }}>
         <div className="relative w-full h-full">
           <img src={img} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
 
           {/* 타로카드 프레임 */}
-          <div className="absolute inset-3 md:inset-4 border border-amber-400/30 rounded-xl" />
-          <div className="absolute inset-5 md:inset-6 border border-amber-400/15 rounded-lg" />
+          <div className="absolute inset-3 md:inset-4 border border-white/30 rounded-xl" />
+          <div className="absolute inset-5 md:inset-6 border border-white/15 rounded-lg" />
 
           {/* 상단 */}
           <div className="absolute top-4 md:top-6 inset-x-0 text-center">
-            <p className="text-[9px] md:text-[10px] tracking-[0.4em] text-amber-200/40">{card.subtitle}</p>
+            <p className="text-[9px] md:text-[10px] tracking-[0.4em] text-white/40">{card.subtitle}</p>
           </div>
 
           {/* 하단 */}
           <div className="absolute bottom-4 md:bottom-6 inset-x-0 text-center">
             <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">{card.title}</h3>
-            <p className="text-[10px] text-amber-200/40 mt-1 tracking-wider">TAP TO REVEAL</p>
+            <p className="text-[10px] text-white/40 mt-1 tracking-wider">TAP TO REVEAL</p>
           </div>
         </div>
       </div>
@@ -200,7 +200,7 @@ function QuestionBox({ manseryeok }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
       <div className="relative z-10 p-6 md:p-8">
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-full bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-lg">✍</div>
+          <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-lg">✍</div>
           <div>
             <h3 className="text-lg font-bold text-white/90">궁금한 것이 있나요?</h3>
             <p className="text-xs text-white/30">사주에 대해 한 가지 질문을 할 수 있습니다</p>
@@ -211,14 +211,14 @@ function QuestionBox({ manseryeok }) {
             onKeyDown={e => e.key === 'Enter' && handleAsk()}
             placeholder="예: 올해 이직하면 어떨까요?"
             disabled={asked}
-            className="flex-1 py-3 px-4 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder-white/20 focus:outline-none focus:border-amber-400/40 disabled:opacity-40" />
+            className="flex-1 py-3 px-4 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder-white/20 focus:outline-none focus:border-white/40 disabled:opacity-40" />
           <button onClick={handleAsk} disabled={loading || asked || !question.trim()}
-            className="px-6 py-3 bg-amber-400/90 text-black rounded-xl font-semibold text-sm hover:bg-amber-400 transition disabled:opacity-30 shrink-0">
+            className="px-6 py-3 bg-white/90 text-black rounded-xl font-semibold text-sm hover:bg-white transition disabled:opacity-30 shrink-0">
             {loading ? '...' : asked ? '완료' : '질문'}
           </button>
         </div>
         {answer && (
-          <div className="mt-5 p-4 bg-white/[0.03] rounded-xl border border-amber-400/10">
+          <div className="mt-5 p-4 bg-white/[0.03] rounded-xl border border-white/10">
             <p className="text-sm text-white/60 leading-relaxed">{cleanText(answer, manseryeok.이름)}</p>
           </div>
         )}
@@ -237,7 +237,7 @@ export default function SajuResultPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <p className="text-white/40 mb-4">결과 데이터가 없습니다.</p>
-          <Link to="/saju" className="text-amber-400/60 hover:text-amber-400 transition">다시 입력하기</Link>
+          <Link to="/saju" className="text-white/60 hover:text-white transition">다시 입력하기</Link>
         </div>
       </div>
     );
@@ -257,14 +257,14 @@ export default function SajuResultPage() {
             <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-35" style={{ filter: 'blur(2px)' }} alt="" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#0c0a06]" />
             <div className="relative z-10 pt-10 pb-8 px-8">
-              <Link to="/saju" className="text-amber-400/30 text-sm mb-6 block hover:text-amber-400/60 transition">‹ 다시 입력</Link>
-              <p className="text-center text-[10px] tracking-[0.6em] text-amber-300/30 mb-2">사주팔자 · 四柱八字</p>
+              <Link to="/saju" className="text-white/30 text-sm mb-6 block hover:text-white/60 transition">‹ 다시 입력</Link>
+              <p className="text-center text-[10px] tracking-[0.6em] text-white/30 mb-2">사주팔자 · 四柱八字</p>
               {manseryeok.이름 && manseryeok.이름 !== '미입력' && (
-                <p className="text-center text-lg md:text-xl font-bold text-amber-400/70 mb-6">{manseryeok.이름}님의 사주</p>
+                <p className="text-center text-lg md:text-xl font-bold text-white/70 mb-6">{manseryeok.이름}님의 사주</p>
               )}
               <SajuChart manseryeok={manseryeok} />
               <div className="flex justify-center gap-2 flex-wrap mt-6">
-                <span className="px-4 py-1.5 glass rounded-full text-amber-300/60 text-[11px] border border-white/5">{manseryeok.신강신약}</span>
+                <span className="px-4 py-1.5 glass rounded-full text-white/60 text-[11px] border border-white/5">{manseryeok.신강신약}</span>
                 <span className="px-4 py-1.5 glass rounded-full text-blue-300/60 text-[11px] border border-blue-400/10">용신 {yongsinText[manseryeok.용신]}</span>
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function SajuResultPage() {
         {/* 타로카드 그리드 */}
         <div>
           <div className="text-center mb-8">
-            <p className="text-[10px] tracking-[0.5em] text-amber-400/30 mb-2">FORTUNE CARDS</p>
+            <p className="text-[10px] tracking-[0.5em] text-white/30 mb-2">FORTUNE CARDS</p>
             <h2 className="text-xl md:text-2xl font-bold text-white/80">당신의 운명 카드</h2>
             <p className="text-xs text-white/25 mt-2">카드를 터치하면 운명이 드러납니다</p>
           </div>
@@ -289,7 +289,7 @@ export default function SajuResultPage() {
         </div>
 
         <div className="text-center pb-8">
-          <Link to="/saju" className="text-amber-400/40 text-sm hover:text-amber-400/70 transition">← 다른 사주 보기</Link>
+          <Link to="/saju" className="text-white/40 text-sm hover:text-white/70 transition">← 다른 사주 보기</Link>
         </div>
       </div>
 

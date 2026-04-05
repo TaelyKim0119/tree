@@ -5,13 +5,12 @@ import galaxy from '../assets/images/andy-holmes-rCbdp8VCYhQ-unsplash.jpg';
 export default function HomePage() {
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center">
-      {/* 풀스크린 우주 배경 */}
       <img src={galaxy} className="absolute inset-0 w-full h-full object-cover" alt="" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+      <div className="absolute inset-0 bg-black/50" />
 
       <div className="relative z-10 text-center px-6 max-w-[800px]">
-        {/* 오행 아이콘 */}
-        <div className="flex justify-center gap-3 md:gap-4 mb-12">
+        {/* 오행 */}
+        <div className="flex justify-center gap-3 md:gap-4 mb-14">
           {['목','화','토','금','수'].map((oh, i) => (
             <div key={oh} className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden ring-1 ring-white/20 shadow-lg animate-pulse" style={{ animationDelay: `${i * 0.4}s`, animationDuration: '3s' }}>
               <img src={ohengImage[oh]} className="w-full h-full object-cover" alt={oh} />
@@ -19,22 +18,23 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* 타이틀 */}
-        <p className="text-[11px] md:text-xs tracking-[0.8em] text-white/40 mb-4">四 柱 命 理</p>
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-5 tracking-wider gold-text">사주명리</h1>
-        <p className="text-base md:text-lg text-white/35 mb-20 tracking-widest">오행의 기운으로 읽는 당신의 운명</p>
+        <p className="text-xs md:text-sm tracking-[0.5em] text-white/50 mb-6 font-light">四柱命理</p>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 text-white tracking-tight leading-tight">
+          사주명리
+        </h1>
+        <p className="text-base md:text-lg text-white/50 mb-20 font-light tracking-wide">
+          오행의 기운으로 읽는 당신의 운명
+        </p>
 
-        {/* CTA 버튼 */}
         <Link to="/saju"
-          className="inline-block px-12 md:px-16 py-4 md:py-5 bg-gradient-to-r from-amber-500/90 via-amber-400/90 to-yellow-500/90 text-black rounded-full font-bold text-base md:text-lg tracking-[0.15em] shadow-[0_0_40px_rgba(196,168,98,0.3)] hover:shadow-[0_0_60px_rgba(196,168,98,0.5)] hover:scale-105 transition-all duration-500">
+          className="inline-block px-14 md:px-20 py-4 md:py-5 bg-white text-black rounded-full font-bold text-sm md:text-base tracking-[0.1em] hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.15)]">
           내 사주 보기
         </Link>
-        <p className="text-white/20 text-xs mt-5 tracking-wider">생년월일시로 종합 사주팔자 분석</p>
+        <p className="text-white/30 text-xs md:text-sm mt-6 font-light">생년월일시로 종합 사주팔자 분석</p>
       </div>
 
-      {/* 하단 장식 */}
       <div className="absolute bottom-8 left-0 right-0 text-center">
-        <p className="text-white/10 text-[10px] tracking-[0.5em]">木 · 火 · 土 · 金 · 水</p>
+        <p className="text-white/15 text-[10px] tracking-[0.5em] font-light">木 · 火 · 土 · 金 · 水</p>
       </div>
     </div>
   );
