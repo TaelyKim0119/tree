@@ -46,103 +46,95 @@ function cleanText(text) {
   return text.replace(/\*\*/g, '').replace(/^#+\s*/gm, '').replace(/^[-*]\s*/gm, '• ').trim();
 }
 
-function TarotCard({ card, content }) {
-  const [flipped, setFlipped] = useState(false);
-  const cleaned = cleanText(content);
+function CardModal({ card, content, onClose }) {
   const img = cardImages[card.key];
+  const cleaned = cleanText(content);
 
   return (
-    <div
-      className="cursor-pointer group"
-      style={{ perspective: '1200px' }}
-      onClick={() => setFlipped(!flipped)}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      {/* 배경 어둡게 */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+
+      {/* 모달 카드 */}
       <div
-        className="relative transition-transform duration-700 ease-in-out"
-        style={{
-          transformStyle: 'preserve-3d',
-          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-        }}
+        className="relative w-full max-w-[500px] lg:max-w-[600px] max-h-[85vh] rounded-2xl overflow-hidden border-2 border-amber-400/30 shadow-[0_0_60px_rgba(196,168,98,0.15)] animate-[scaleIn_0.3s_ease-out]"
+        onClick={e => e.stopPropagation()}
       >
-        {/* 앞면 - 타로카드 스타일 */}
-        <div
-          className="w-full rounded-2xl overflow-hidden border-2 border-amber-400/20 shadow-2xl"
-          style={{ backfaceVisibility: 'hidden', aspectRatio: '2/3' }}
-        >
-          <div className="relative w-full h-full">
-            <img src={img} className="absolute inset-0 w-full h-full object-cover" alt="" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
+        {/* 이미지 헤더 */}
+        <div className="relative h-48 md:h-56 shrink-0">
+          <img src={img} className="w-full h-full object-cover" alt="" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#0e0c08]" />
 
-            {/* 타로카드 프레임 */}
-            <div className="absolute inset-3 md:inset-4 border border-amber-400/30 rounded-xl" />
-            <div className="absolute inset-5 md:inset-6 border border-amber-400/15 rounded-lg" />
+          {/* 프레임 */}
+          <div className="absolute inset-3 border border-amber-400/20 rounded-xl" />
 
-            {/* 상단 장식 */}
-            <div className="absolute top-4 md:top-6 inset-x-0 text-center">
-              <p className="text-[9px] md:text-[10px] tracking-[0.4em] text-amber-200/40">{card.subtitle}</p>
-            </div>
+          {/* 닫기 버튼 */}
+          <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition text-sm">✕</button>
 
-            {/* 중앙 타이틀 */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 rounded-full bg-black/40 backdrop-blur-sm border border-amber-400/30 flex items-center justify-center">
-                  <span className="text-amber-200/80 text-2xl md:text-3xl font-bold">{card.title.charAt(0)}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* 하단 타이틀 */}
-            <div className="absolute bottom-4 md:bottom-6 inset-x-0 text-center">
-              <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">{card.title}</h3>
-              <p className="text-[10px] text-amber-200/40 mt-1 tracking-wider">TAP TO REVEAL</p>
-            </div>
-
-            {/* 호버 효과 */}
-            <div className="absolute inset-0 bg-amber-400/0 group-hover:bg-amber-400/5 transition-colors duration-300 rounded-2xl" />
+          {/* 타이틀 */}
+          <div className="absolute bottom-5 left-6 right-6">
+            <p className="text-[10px] tracking-[0.4em] text-amber-300/50 mb-1">{card.subtitle}</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">{card.title}</h2>
           </div>
         </div>
 
-        {/* 뒷면 - 내용 */}
-        <div
-          className="absolute top-0 left-0 w-full rounded-2xl overflow-hidden border-2 border-amber-400/20 bg-[#0e0c08] shadow-2xl"
-          style={{
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-            minHeight: '100%',
-          }}
-        >
-          {/* 상단 이미지 헤더 */}
-          <div className="relative h-28 md:h-36">
-            <img src={img} className="w-full h-full object-cover" alt="" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-[#0e0c08]" />
-            <div className="absolute bottom-4 left-5 right-5">
-              <p className="text-[9px] tracking-[0.3em] text-amber-300/40">{card.subtitle}</p>
-              <h3 className="text-xl font-bold text-white">{card.title}</h3>
-            </div>
-          </div>
-
-          {/* 내용 */}
-          <div className="p-5 md:p-6">
+        {/* 내용 스크롤 */}
+        <div className="bg-[#0e0c08] overflow-y-auto" style={{ maxHeight: 'calc(85vh - 14rem)' }}>
+          <div className="p-6 md:p-8">
             {cleaned ? (
-              <div className="space-y-2.5">
+              <div className="space-y-3">
                 {cleaned.split('\n').filter(l => l.trim()).map((line, i) => {
                   if (line.startsWith('• ')) {
                     return (
-                      <div key={i} className="flex gap-2.5 text-sm text-white/55 leading-relaxed">
-                        <span className="text-amber-400/40 shrink-0 mt-0.5">◆</span>
+                      <div key={i} className="flex gap-3 text-[15px] text-white/60 leading-[1.8]">
+                        <span className="text-amber-400/40 shrink-0 mt-1">◆</span>
                         <span>{line.slice(2)}</span>
                       </div>
                     );
                   }
-                  return <p key={i} className="text-sm text-white/55 leading-relaxed">{line}</p>;
+                  return <p key={i} className="text-[15px] text-white/60 leading-[1.8]">{line}</p>;
                 })}
               </div>
             ) : (
               <p className="text-sm text-white/25">해당 분석 내용이 없습니다.</p>
             )}
-            <div className="mt-5 pt-4 border-t border-white/5 text-center">
-              <p className="text-[10px] text-amber-400/30 tracking-wider">TAP TO CLOSE</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TarotCard({ card, onClick }) {
+  const img = cardImages[card.key];
+
+  return (
+    <div className="cursor-pointer group" onClick={onClick}>
+      <div className="w-full rounded-2xl overflow-hidden border-2 border-amber-400/20 shadow-2xl hover:shadow-[0_0_40px_rgba(196,168,98,0.1)] transition-all duration-500 hover:-translate-y-2" style={{ aspectRatio: '2/3' }}>
+        <div className="relative w-full h-full">
+          <img src={img} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
+
+          {/* 타로카드 프레임 */}
+          <div className="absolute inset-3 md:inset-4 border border-amber-400/30 rounded-xl" />
+          <div className="absolute inset-5 md:inset-6 border border-amber-400/15 rounded-lg" />
+
+          {/* 상단 */}
+          <div className="absolute top-4 md:top-6 inset-x-0 text-center">
+            <p className="text-[9px] md:text-[10px] tracking-[0.4em] text-amber-200/40">{card.subtitle}</p>
+          </div>
+
+          {/* 중앙 */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black/40 backdrop-blur-sm border border-amber-400/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+              <span className="text-amber-200/80 text-2xl md:text-3xl font-bold">{card.title.charAt(0)}</span>
             </div>
+          </div>
+
+          {/* 하단 */}
+          <div className="absolute bottom-4 md:bottom-6 inset-x-0 text-center">
+            <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">{card.title}</h3>
+            <p className="text-[10px] text-amber-200/40 mt-1 tracking-wider">TAP TO REVEAL</p>
           </div>
         </div>
       </div>
@@ -192,20 +184,13 @@ function QuestionBox({ manseryeok }) {
           </div>
         </div>
         <div className="flex gap-2">
-          <input
-            type="text"
-            value={question}
-            onChange={e => setQuestion(e.target.value)}
+          <input type="text" value={question} onChange={e => setQuestion(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleAsk()}
             placeholder="예: 올해 이직하면 어떨까요?"
             disabled={asked}
-            className="flex-1 py-3 px-4 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder-white/20 focus:outline-none focus:border-amber-400/40 disabled:opacity-40"
-          />
-          <button
-            onClick={handleAsk}
-            disabled={loading || asked || !question.trim()}
-            className="px-6 py-3 bg-amber-400/90 text-black rounded-xl font-semibold text-sm hover:bg-amber-400 transition disabled:opacity-30 shrink-0"
-          >
+            className="flex-1 py-3 px-4 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder-white/20 focus:outline-none focus:border-amber-400/40 disabled:opacity-40" />
+          <button onClick={handleAsk} disabled={loading || asked || !question.trim()}
+            className="px-6 py-3 bg-amber-400/90 text-black rounded-xl font-semibold text-sm hover:bg-amber-400 transition disabled:opacity-30 shrink-0">
             {loading ? '...' : asked ? '완료' : '질문'}
           </button>
         </div>
@@ -222,6 +207,7 @@ function QuestionBox({ manseryeok }) {
 export default function SajuResultPage() {
   const location = useLocation();
   const data = location.state;
+  const [openCard, setOpenCard] = useState(null);
 
   if (!data) {
     return (
@@ -271,7 +257,7 @@ export default function SajuResultPage() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {CARD_CONFIG.map((card) => (
-              <TarotCard key={card.key} card={card} content={sections[card.key]} />
+              <TarotCard key={card.key} card={card} onClick={() => setOpenCard(card)} />
             ))}
           </div>
         </div>
@@ -279,11 +265,22 @@ export default function SajuResultPage() {
         {/* 질문 박스 */}
         <QuestionBox manseryeok={manseryeok} />
 
-        {/* 하단 */}
         <div className="text-center pb-8">
           <Link to="/saju" className="text-amber-400/40 text-sm hover:text-amber-400/70 transition">← 다른 사주 보기</Link>
         </div>
       </div>
+
+      {/* 카드 모달 */}
+      {openCard && (
+        <CardModal card={openCard} content={sections[openCard.key]} onClose={() => setOpenCard(null)} />
+      )}
+
+      <style>{`
+        @keyframes scaleIn {
+          from { transform: scale(0.8); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }
