@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ohengImage, bgImages } from '../utils/imageMap';
+import penBook from '../assets/images/aaron-burden-CKlHKtCJZKk-unsplash.jpg';
 import { SIJI_OPTIONS, CHEONGAN_OHENG } from '../utils/constants';
 import { calculateManseryeok } from '../utils/manseryeok';
 import { getOhengDistribution, analyzeSipsin, getSingang, getYongsin } from '../utils/oheng';
@@ -61,11 +62,25 @@ export default function SajuInputPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-2 border-amber-400/30 border-t-amber-400 rounded-full animate-spin mx-auto mb-6" />
-          <p className="text-amber-400/60 text-sm tracking-widest">사주 풀이 생성 중...</p>
-          <p className="text-white/20 text-xs mt-2">AI가 분석하고 있습니다. 잠시만 기다려주세요.</p>
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-20" alt="" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        <div className="relative z-10 text-center px-8">
+          <div className="w-20 h-20 mx-auto mb-8 relative">
+            <div className="absolute inset-0 border-2 border-amber-400/20 rounded-full animate-ping" style={{animationDuration:'2s'}} />
+            <div className="absolute inset-2 border-2 border-amber-400/30 rounded-full animate-ping" style={{animationDuration:'2.5s'}} />
+            <div className="absolute inset-4 border-2 border-amber-400/50 rounded-full animate-spin" style={{animationDuration:'3s'}} />
+            <div className="absolute inset-0 flex items-center justify-center text-3xl">☰</div>
+          </div>
+          <p className="text-amber-400/80 text-lg tracking-[0.3em] mb-3">운명을 풀어보는 중...</p>
+          <p className="text-white/30 text-sm">사주팔자를 분석하고 있습니다</p>
+          <div className="flex justify-center gap-1 mt-6">
+            {['목','화','토','금','수'].map((oh,i) => (
+              <div key={oh} className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/10 animate-pulse" style={{animationDelay:`${i*0.3}s`}}>
+                <img src={ohengImage[oh]} className="w-full h-full object-cover" alt="" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
