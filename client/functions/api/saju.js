@@ -1,13 +1,5 @@
 export async function onRequestPost(context) {
-  const { env } = context;
-
-  const apiKey = env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'GEMINI_API_KEY 환경변수가 설정되지 않았습니다.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  const apiKey = 'AIzaSyCIWV2yyqitbINp1MV3FChuEsJsR1xnLGY';
 
   let body;
   try {
