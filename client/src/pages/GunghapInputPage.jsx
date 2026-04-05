@@ -37,14 +37,20 @@ function PersonForm({ label, person, onChange }) {
           </div>
         </div>
         <div className="grid grid-cols-4 gap-1.5">
-          {SIJI_OPTIONS.map(s => (
-            <button key={s.value} onClick={() => update('hour', s.value)}
-              className={`py-2 px-1 rounded-lg text-[10px] text-center transition ${
-                person.hour === s.value
-                  ? 'bg-amber-400/90 text-black font-semibold'
-                  : 'bg-[#1a1610] text-white/50 border border-amber-400/10'
-              }`}>{s.label.split(' ')[0]}</button>
-          ))}
+          {SIJI_OPTIONS.map(s => {
+            const timeRange = s.label.match(/\((.+)\)/)?.[1] || '';
+            return (
+              <button key={s.value} onClick={() => update('hour', s.value)}
+                className={`py-2 px-1 rounded-lg text-center transition ${
+                  person.hour === s.value
+                    ? 'bg-amber-400/90 text-black font-semibold'
+                    : 'bg-[#1a1610] text-white/50 border border-amber-400/10'
+                }`}>
+                <div className="text-[11px]">{s.label.split(' ')[0]}</div>
+                <div className={`text-[9px] ${person.hour === s.value ? 'text-black/50' : 'text-white/20'}`}>{timeRange}</div>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -84,7 +90,7 @@ export default function GunghapInputPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-[480px] w-full rounded-[2rem] overflow-hidden relative">
+      <div className="max-w-[480px] md:max-w-[600px] lg:max-w-[700px] w-full rounded-[2rem] overflow-hidden relative">
         <img src={bgImages.lake} className="absolute inset-0 w-full h-full object-cover opacity-10" alt="" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
         <div className="relative z-10 p-8">

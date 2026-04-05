@@ -73,7 +73,7 @@ export default function SajuInputPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-[420px] w-full rounded-[2rem] overflow-hidden relative">
+      <div className="max-w-[420px] md:max-w-[560px] lg:max-w-[640px] w-full rounded-[2rem] overflow-hidden relative">
         <img src={bgImages.input} className="absolute inset-0 w-full h-full object-cover opacity-15" style={{ filter: 'blur(2px)' }} alt="" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
         <div className="relative z-10 p-8">
@@ -128,20 +128,21 @@ export default function SajuInputPage() {
           <div className="mb-10">
             <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">태어난 시간</label>
             <div className="grid grid-cols-4 gap-2">
-              {SIJI_OPTIONS.map(s => (
-                <button key={s.value} onClick={() => setHour(s.value)}
-                  className={`py-2.5 px-1 rounded-xl text-xs text-center transition ${
-                    hour === s.value
-                      ? 'bg-amber-400/90 text-black font-semibold shadow-lg shadow-amber-400/10'
-                      : 'bg-[#1a1610] text-white/50 border border-amber-400/10 hover:border-amber-400/30'
-                  }`}>
-                  {s.label.split(' ')[0]}
-                </button>
-              ))}
+              {SIJI_OPTIONS.map(s => {
+                const timeRange = s.label.match(/\((.+)\)/)?.[1] || '';
+                return (
+                  <button key={s.value} onClick={() => setHour(s.value)}
+                    className={`py-3 px-1 rounded-xl text-center transition ${
+                      hour === s.value
+                        ? 'bg-amber-400/90 text-black font-semibold shadow-lg shadow-amber-400/10'
+                        : 'bg-[#1a1610] text-white/50 border border-amber-400/10 hover:border-amber-400/30'
+                    }`}>
+                    <div className="text-sm">{s.label.split(' ')[0]}</div>
+                    <div className={`text-[10px] mt-0.5 ${hour === s.value ? 'text-black/60' : 'text-white/25'}`}>{timeRange}</div>
+                  </button>
+                );
+              })}
             </div>
-            <p className="text-amber-400/25 text-[10px] mt-2 text-center">
-              {SIJI_OPTIONS.find(s => s.value === hour)?.label}
-            </p>
           </div>
           <button onClick={handleSubmit} className="shimmer w-full py-4 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-black rounded-2xl font-bold text-base tracking-[0.15em] shadow-2xl shadow-amber-500/20 hover:shadow-amber-500/30 transition-shadow">
             사주 풀이 시작

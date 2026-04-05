@@ -27,7 +27,7 @@ export default function SajuResultPage() {
 
   return (
     <div className="min-h-screen py-8 px-4">
-      <div className="max-w-[680px] mx-auto">
+      <div className="max-w-[680px] lg:max-w-[860px] mx-auto">
         <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-[#0c0a06]">
           <div className="relative overflow-hidden">
             <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-20" style={{ filter: 'blur(3px)' }} alt="" />
