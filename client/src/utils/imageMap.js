@@ -54,6 +54,7 @@ export const bgImages = {
 export const cardImages = {
   만세력: stonesSpiral,
   원국: stonesColor,
+  장단점: treeTall,
   나이별: cardAge,
   금전: cardMoney,
   직업: cardJob,

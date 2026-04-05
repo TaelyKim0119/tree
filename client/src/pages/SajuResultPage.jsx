@@ -8,6 +8,7 @@ import penBook from '../assets/images/aaron-burden-CKlHKtCJZKk-unsplash.jpg';
 const CARD_CONFIG = [
   { key: '만세력', title: '만세력 판독', subtitle: 'Birth Chart', markers: ['1. 만세력 판독 요약', '1.', '만세력 판독'] },
   { key: '원국', title: '원국 핵심', subtitle: 'Core Structure', markers: ['2. 원국 핵심 구조', '2.', '원국 핵심'] },
+  { key: '장단점', title: '장점과 단점', subtitle: 'Strengths & Weaknesses', markers: ['타고난 강점', '치명적 약점', '강점', '약점'] },
   { key: '나이별', title: '나이별 운세', subtitle: 'Life Timeline', markers: ['3. 평생 총운', '3.', '평생 총운'] },
   { key: '금전', title: '금전운', subtitle: 'Wealth', markers: ['4. 금전운', '4.', '금전운'] },
   { key: '직업', title: '직업운', subtitle: 'Career', markers: ['5. 직업운', '5.', '직업운'] },
@@ -41,14 +42,18 @@ function parseAnalysisSections(text) {
   return sections;
 }
 
-function cleanText(text) {
+function cleanText(text, name) {
   if (!text) return '';
-  return text.replace(/\*\*/g, '').replace(/^#+\s*/gm, '').replace(/^[-*]\s*/gm, '• ').trim();
+  let result = text.replace(/\*\*/g, '').replace(/^#+\s*/gm, '').replace(/^[-*]\s*/gm, '• ').trim();
+  if (name && name !== '미입력') {
+    result = result.replace(/귀하/g, name + '님');
+  }
+  return result;
 }
 
-function CardModal({ card, content, onClose }) {
+function CardModal({ card, content, onClose, name }) {
   const img = cardImages[card.key];
-  const cleaned = cleanText(content);
+  const cleaned = cleanText(content, name);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
@@ -124,13 +129,6 @@ function TarotCard({ card, onClick }) {
             <p className="text-[9px] md:text-[10px] tracking-[0.4em] text-amber-200/40">{card.subtitle}</p>
           </div>
 
-          {/* 중앙 */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black/40 backdrop-blur-sm border border-amber-400/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-              <span className="text-amber-200/80 text-2xl md:text-3xl font-bold">{card.title.charAt(0)}</span>
-            </div>
-          </div>
-
           {/* 하단 */}
           <div className="absolute bottom-4 md:bottom-6 inset-x-0 text-center">
             <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">{card.title}</h3>
@@ -196,7 +194,7 @@ function QuestionBox({ manseryeok }) {
         </div>
         {answer && (
           <div className="mt-5 p-4 bg-white/[0.03] rounded-xl border border-amber-400/10">
-            <p className="text-sm text-white/60 leading-relaxed">{cleanText(answer)}</p>
+            <p className="text-sm text-white/60 leading-relaxed">{cleanText(answer, manseryeok.이름)}</p>
           </div>
         )}
       </div>
@@ -235,7 +233,10 @@ export default function SajuResultPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#0c0a06]" />
             <div className="relative z-10 pt-10 pb-8 px-8">
               <Link to="/saju" className="text-amber-400/30 text-sm mb-6 block hover:text-amber-400/60 transition">‹ 다시 입력</Link>
-              <p className="text-center text-[10px] tracking-[0.6em] text-amber-300/30 mb-8">사주팔자 · 四柱八字</p>
+              <p className="text-center text-[10px] tracking-[0.6em] text-amber-300/30 mb-2">사주팔자 · 四柱八字</p>
+              {manseryeok.이름 && manseryeok.이름 !== '미입력' && (
+                <p className="text-center text-lg md:text-xl font-bold text-amber-400/70 mb-6">{manseryeok.이름}님의 사주</p>
+              )}
               <SajuChart manseryeok={manseryeok} />
               <div className="flex justify-center gap-2 flex-wrap mt-6">
                 <span className="px-4 py-1.5 glass rounded-full text-amber-300/60 text-[11px] border border-white/5">{manseryeok.신강신약}</span>
@@ -272,7 +273,7 @@ export default function SajuResultPage() {
 
       {/* 카드 모달 */}
       {openCard && (
-        <CardModal card={openCard} content={sections[openCard.key]} onClose={() => setOpenCard(null)} />
+        <CardModal card={openCard} content={sections[openCard.key]} onClose={() => setOpenCard(null)} name={manseryeok.이름} />
       )}
 
       <style>{`

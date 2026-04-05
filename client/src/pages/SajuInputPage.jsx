@@ -9,6 +9,7 @@ import { calculateDaeun, getSeunRange } from '../utils/daeun';
 
 export default function SajuInputPage() {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
   const [gender, setGender] = useState('남');
   const [calendarType, setCalendarType] = useState('양력');
   const [year, setYear] = useState(1990);
@@ -34,7 +35,7 @@ export default function SajuInputPage() {
       const seun = getSeunRange(new Date().getFullYear());
 
       const manseryeokData = {
-        성별: gender, 달력: calendarType,
+        이름: name || '미입력', 성별: gender, 달력: calendarType,
         양력생일: `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`,
         출생시간: `${hour}시`,
         년주: manseryeok.year, 월주: manseryeok.month,
@@ -103,6 +104,11 @@ export default function SajuInputPage() {
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold text-white/90 mb-2">사주 정보 입력</h2>
             <p className="text-xs text-white/25 tracking-wider">당신의 오행을 찾아드립니다</p>
+          </div>
+          <div className="mb-6">
+            <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">이름</label>
+            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="이름을 입력하세요"
+              className="w-full py-3 px-4 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm focus:outline-none focus:border-amber-400/40 transition placeholder-white/20" />
           </div>
           <div className="mb-6">
             <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">성별</label>
