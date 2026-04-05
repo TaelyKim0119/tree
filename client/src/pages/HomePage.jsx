@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-[420px] md:max-w-[560px] lg:max-w-[700px] w-full rounded-[2rem] overflow-hidden relative" style={{ minHeight: '680px' }}>
-        <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-25" style={{ filter: 'blur(1px)' }} alt="" />
+        <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-40" style={{ filter: 'blur(1px)' }} alt="" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
         <div className="relative z-10 flex flex-col items-center pt-24 pb-16 px-8 md:px-16 lg:pt-32 lg:pb-20">
           <div className="flex gap-3 mb-14">

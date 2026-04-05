@@ -1,5 +1,5 @@
 export async function onRequestPost(context) {
-  const apiKey = 'AIzaSyCIWV2yyqitbINp1MV3FChuEsJsR1xnLGY';
+  const apiKey = context.env?.GEMINI_API_KEY || context.env?.GEMINI_API_KEY;
 
   let body;
   try {

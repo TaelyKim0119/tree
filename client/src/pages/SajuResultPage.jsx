@@ -181,8 +181,8 @@ function QuestionBox({ manseryeok }) {
 
   return (
     <div className="rounded-2xl overflow-hidden border border-white/10 relative">
-      <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-10" alt="" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/80" />
+      <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-25" alt="" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
       <div className="relative z-10 p-6 md:p-8">
         <div className="flex items-center gap-3 mb-5">
           <div className="w-10 h-10 rounded-full bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-lg">✍</div>
@@ -245,7 +245,7 @@ export default function SajuResultPage() {
         {/* 사주팔자 히어로 */}
         <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-[#0c0a06]">
           <div className="relative overflow-hidden">
-            <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-20" style={{ filter: 'blur(3px)' }} alt="" />
+            <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-35" style={{ filter: 'blur(2px)' }} alt="" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#0c0a06]" />
             <div className="relative z-10 pt-10 pb-8 px-8">
               <Link to="/saju" className="text-amber-400/30 text-sm mb-6 block hover:text-amber-400/60 transition">‹ 다시 입력</Link>

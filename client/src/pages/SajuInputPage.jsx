@@ -63,8 +63,8 @@ export default function SajuInputPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-20" alt="" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        <img src={penBook} className="absolute inset-0 w-full h-full object-cover opacity-35" alt="" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
         <div className="relative z-10 text-center px-8">
           <div className="w-20 h-20 mx-auto mb-8 relative">
             <div className="absolute inset-0 border-2 border-amber-400/20 rounded-full animate-ping" style={{animationDuration:'2s'}} />
@@ -89,7 +89,7 @@ export default function SajuInputPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-[420px] md:max-w-[560px] lg:max-w-[640px] w-full rounded-[2rem] overflow-hidden relative">
-        <img src={bgImages.input} className="absolute inset-0 w-full h-full object-cover opacity-15" style={{ filter: 'blur(2px)' }} alt="" />
+        <img src={bgImages.input} className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ filter: 'blur(1px)' }} alt="" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
         <div className="relative z-10 p-8">
           <Link to="/" className="text-amber-400/30 text-sm mb-8 block hover:text-amber-400/60 transition">‹ 뒤로</Link>

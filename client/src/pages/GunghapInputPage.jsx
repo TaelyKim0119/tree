@@ -91,7 +91,7 @@ export default function GunghapInputPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-[480px] md:max-w-[600px] lg:max-w-[700px] w-full rounded-[2rem] overflow-hidden relative">
-        <img src={bgImages.lake} className="absolute inset-0 w-full h-full object-cover opacity-10" alt="" />
+        <img src={bgImages.lake} className="absolute inset-0 w-full h-full object-cover opacity-30" alt="" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
         <div className="relative z-10 p-8">
           <Link to="/" className="text-amber-400/30 text-sm mb-8 block hover:text-amber-400/60 transition">‹ 뒤로</Link>
