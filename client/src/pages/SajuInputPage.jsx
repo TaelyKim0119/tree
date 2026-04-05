@@ -108,22 +108,40 @@ export default function SajuInputPage() {
           <div className="mb-6">
             <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">생년월일</label>
             <div className="grid grid-cols-3 gap-2">
-              <select value={year} onChange={e => setYear(Number(e.target.value))} className="py-3 px-2 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm text-center appearance-none cursor-pointer">
-                {years.map(y => <option key={y} value={y}>{y}년</option>)}
-              </select>
-              <select value={month} onChange={e => setMonth(Number(e.target.value))} className="py-3 px-2 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm text-center appearance-none cursor-pointer">
-                {months.map(m => <option key={m} value={m}>{m}월</option>)}
-              </select>
-              <select value={day} onChange={e => setDay(Number(e.target.value))} className="py-3 px-2 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm text-center appearance-none cursor-pointer">
-                {days.map(d => <option key={d} value={d}>{d}일</option>)}
-              </select>
+              <div className="relative">
+                <input type="number" min="1940" max="2040" value={year} onChange={e => setYear(Number(e.target.value))}
+                  className="w-full py-3 px-3 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40 transition" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/30 text-xs pointer-events-none">년</span>
+              </div>
+              <div className="relative">
+                <input type="number" min="1" max="12" value={month} onChange={e => setMonth(Math.min(12, Math.max(1, Number(e.target.value))))}
+                  className="w-full py-3 px-3 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40 transition" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/30 text-xs pointer-events-none">월</span>
+              </div>
+              <div className="relative">
+                <input type="number" min="1" max="31" value={day} onChange={e => setDay(Math.min(31, Math.max(1, Number(e.target.value))))}
+                  className="w-full py-3 px-3 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40 transition" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/30 text-xs pointer-events-none">일</span>
+              </div>
             </div>
           </div>
           <div className="mb-10">
             <label className="text-[11px] tracking-[0.2em] text-amber-400/50 block mb-3">태어난 시간</label>
-            <select value={hour} onChange={e => setHour(Number(e.target.value))} className="w-full py-3 px-4 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm appearance-none cursor-pointer">
-              {SIJI_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-            </select>
+            <div className="grid grid-cols-4 gap-2">
+              {SIJI_OPTIONS.map(s => (
+                <button key={s.value} onClick={() => setHour(s.value)}
+                  className={`py-2.5 px-1 rounded-xl text-xs text-center transition ${
+                    hour === s.value
+                      ? 'bg-amber-400/90 text-black font-semibold shadow-lg shadow-amber-400/10'
+                      : 'bg-[#1a1610] text-white/50 border border-amber-400/10 hover:border-amber-400/30'
+                  }`}>
+                  {s.label.split(' ')[0]}
+                </button>
+              ))}
+            </div>
+            <p className="text-amber-400/25 text-[10px] mt-2 text-center">
+              {SIJI_OPTIONS.find(s => s.value === hour)?.label}
+            </p>
           </div>
           <button onClick={handleSubmit} className="shimmer w-full py-4 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-black rounded-2xl font-bold text-base tracking-[0.15em] shadow-2xl shadow-amber-500/20 hover:shadow-amber-500/30 transition-shadow">
             사주 풀이 시작

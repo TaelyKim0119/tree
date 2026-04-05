@@ -20,11 +20,32 @@ function PersonForm({ label, person, onChange }) {
           ))}
         </div>
         <div className="grid grid-cols-3 gap-2">
-          <select value={person.year} onChange={e => update('year', Number(e.target.value))} className="py-2.5 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm text-center appearance-none">{years.map(y => <option key={y} value={y}>{y}년</option>)}</select>
-          <select value={person.month} onChange={e => update('month', Number(e.target.value))} className="py-2.5 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm text-center appearance-none">{months.map(m => <option key={m} value={m}>{m}월</option>)}</select>
-          <select value={person.day} onChange={e => update('day', Number(e.target.value))} className="py-2.5 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm text-center appearance-none">{days.map(d => <option key={d} value={d}>{d}일</option>)}</select>
+          <div className="relative">
+            <input type="number" min="1940" max="2040" value={person.year} onChange={e => update('year', Number(e.target.value))}
+              className="w-full py-2.5 px-2 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40" />
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400/30 text-[10px] pointer-events-none">년</span>
+          </div>
+          <div className="relative">
+            <input type="number" min="1" max="12" value={person.month} onChange={e => update('month', Math.min(12, Math.max(1, Number(e.target.value))))}
+              className="w-full py-2.5 px-2 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40" />
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400/30 text-[10px] pointer-events-none">월</span>
+          </div>
+          <div className="relative">
+            <input type="number" min="1" max="31" value={person.day} onChange={e => update('day', Math.min(31, Math.max(1, Number(e.target.value))))}
+              className="w-full py-2.5 px-2 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40" />
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400/30 text-[10px] pointer-events-none">일</span>
+          </div>
         </div>
-        <select value={person.hour} onChange={e => update('hour', Number(e.target.value))} className="w-full py-2.5 bg-white/[0.03] border border-white/5 rounded-xl text-white/60 text-sm appearance-none">{SIJI_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}</select>
+        <div className="grid grid-cols-4 gap-1.5">
+          {SIJI_OPTIONS.map(s => (
+            <button key={s.value} onClick={() => update('hour', s.value)}
+              className={`py-2 px-1 rounded-lg text-[10px] text-center transition ${
+                person.hour === s.value
+                  ? 'bg-amber-400/90 text-black font-semibold'
+                  : 'bg-[#1a1610] text-white/50 border border-amber-400/10'
+              }`}>{s.label.split(' ')[0]}</button>
+          ))}
+        </div>
       </div>
     </div>
   );
