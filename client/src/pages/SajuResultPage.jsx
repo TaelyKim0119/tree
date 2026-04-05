@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import SajuChart from '../components/SajuChart';
 import OhengChart from '../components/OhengChart';
-import { bgImages, ohengImage, cardImages } from '../utils/imageMap';
+import { ohengImage, cardImages } from '../utils/imageMap';
 import penBook from '../assets/images/aaron-burden-CKlHKtCJZKk-unsplash.jpg';
 
 const CARD_CONFIG = [
@@ -254,8 +254,7 @@ export default function SajuResultPage() {
         {/* 사주팔자 히어로 */}
         <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-[#0c0a06]">
           <div className="relative overflow-hidden">
-            <img src={bgImages.main} className="absolute inset-0 w-full h-full object-cover opacity-35" style={{ filter: 'blur(2px)' }} alt="" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-[#0c0a06]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0c0a06] via-[#0c0a06] to-[#0c0a06]" />
             <div className="relative z-10 pt-10 pb-8 px-8">
               <Link to="/saju" className="text-white/30 text-sm mb-6 block hover:text-white/60 transition">‹ 다시 입력</Link>
               <p className="text-center text-[10px] tracking-[0.6em] text-white/30 mb-2">사주팔자 · 四柱八字</p>
