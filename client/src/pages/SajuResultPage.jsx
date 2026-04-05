@@ -288,9 +288,6 @@ export default function SajuResultPage() {
           </div>
         </div>
 
-        {/* 질문 박스 */}
-        <QuestionBox manseryeok={manseryeok} />
-
         <div className="text-center pb-8">
           <Link to="/saju" className="text-amber-400/40 text-sm hover:text-amber-400/70 transition">← 다른 사주 보기</Link>
         </div>
