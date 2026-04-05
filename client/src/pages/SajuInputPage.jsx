@@ -89,7 +89,7 @@ export default function SajuInputPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-[420px] md:max-w-[560px] lg:max-w-[640px] w-full rounded-[2rem] overflow-hidden relative">
+      <div className="max-w-[500px] md:max-w-[640px] lg:max-w-[720px] w-full rounded-[2rem] overflow-hidden relative">
         <img src={bgImages.input} className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ filter: 'blur(1px)' }} alt="" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
         <div className="relative z-10 p-8">

@@ -16,6 +16,23 @@ const CARD_CONFIG = [
   { key: '결혼', title: '결혼운', subtitle: 'Marriage', markers: ['7. 결혼운', '7.', '결혼운'] },
 ];
 
+// 모든 섹션 마커 (순서대로) — 카드에 포함 안 되는 섹션도 구분용으로 추가
+const ALL_SECTION_MARKERS = [
+  { key: '만세력', patterns: ['1. 만세력 판독 요약', '1. 만세력', '만세력 판독 요약'] },
+  { key: '원국', patterns: ['2. 원국 핵심 구조', '2. 원국', '원국 핵심 구조'] },
+  { key: '장단점', patterns: ['타고난 강점', '강점과 약점', '치명적 약점'] },
+  { key: '나이별', patterns: ['3. 평생 총운', '3. 평생', '평생 총운'] },
+  { key: '금전', patterns: ['4. 금전운', '4. 금전'] },
+  { key: '직업', patterns: ['5. 직업운', '5. 직업'] },
+  { key: '연애', patterns: ['6. 연애운', '6. 연애'] },
+  { key: '결혼', patterns: ['7. 결혼운', '7. 결혼'] },
+  { key: '건강', patterns: ['8. 건강운', '8. 건강'] },
+  { key: '가족', patterns: ['9. 인간관계', '9. 가족', '인간관계/가족운'] },
+  { key: '대운', patterns: ['10. 대운', '10. 대운 상세'] },
+  { key: '세운', patterns: ['11. 세운', '11. 세운 핵심'] },
+  { key: '총평', patterns: ['12. 현실 조언', '12. 현실', '현실 조언 및 총평'] },
+];
+
 function parseAnalysisSections(text) {
   if (!text) return {};
   const sections = {};
@@ -24,14 +41,22 @@ function parseAnalysisSections(text) {
 
   for (const line of lines) {
     const cleanLine = line.replace(/[#*]/g, '').trim();
-    for (const card of CARD_CONFIG) {
-      if (card.markers.some(m => cleanLine.startsWith(m))) {
-        currentKey = card.key;
-        sections[currentKey] = '';
-        break;
+
+    // 새 섹션 시작인지 확인
+    let matched = false;
+    for (const sec of ALL_SECTION_MARKERS) {
+      if (sec.patterns.some(p => cleanLine.startsWith(p) || cleanLine.includes(p))) {
+        // 이전 키와 다른 섹션이면 전환
+        if (currentKey !== sec.key) {
+          currentKey = sec.key;
+          if (!sections[currentKey]) sections[currentKey] = '';
+          matched = true;
+          break;
+        }
       }
     }
-    if (currentKey && sections[currentKey] !== undefined) {
+
+    if (currentKey) {
       sections[currentKey] += line + '\n';
     }
   }
@@ -224,7 +249,7 @@ export default function SajuResultPage() {
 
   return (
     <div className="min-h-screen py-8 px-4">
-      <div className="max-w-[680px] lg:max-w-[960px] mx-auto space-y-10">
+      <div className="max-w-[720px] lg:max-w-[1080px] xl:max-w-[1200px] mx-auto space-y-10">
 
         {/* 사주팔자 히어로 */}
         <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-[#0c0a06]">
