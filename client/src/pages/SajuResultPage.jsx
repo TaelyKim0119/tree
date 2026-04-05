@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import SajuChart from '../components/SajuChart';
 import OhengChart from '../components/OhengChart';
-import { bgImages, ohengImage } from '../utils/imageMap';
+import { bgImages, ohengImage, cardImages } from '../utils/imageMap';
 import penBook from '../assets/images/aaron-burden-CKlHKtCJZKk-unsplash.jpg';
 
 const CARD_CONFIG = [
-  { key: '만세력', title: '만세력 판독', icon: '☰', color: 'from-amber-900/40 to-amber-950/60', markers: ['1. 만세력 판독 요약', '1.', '만세력 판독'] },
-  { key: '원국', title: '원국 핵심', icon: '☯', color: 'from-purple-900/40 to-purple-950/60', markers: ['2. 원국 핵심 구조', '2.', '원국 핵심'] },
-  { key: '나이별', title: '나이별 운세', icon: '⏳', color: 'from-cyan-900/40 to-cyan-950/60', markers: ['3. 평생 총운', '3.', '평생 총운'] },
-  { key: '금전', title: '금전운', icon: '💰', color: 'from-yellow-900/40 to-yellow-950/60', markers: ['4. 금전운', '4.', '금전운'] },
-  { key: '직업', title: '직업운', icon: '💼', color: 'from-blue-900/40 to-blue-950/60', markers: ['5. 직업운', '5.', '직업운'] },
-  { key: '연애', title: '연애운', icon: '💕', color: 'from-pink-900/40 to-pink-950/60', markers: ['6. 연애운', '6.', '연애운'] },
-  { key: '결혼', title: '결혼운', icon: '💍', color: 'from-rose-900/40 to-rose-950/60', markers: ['7. 결혼운', '7.', '결혼운'] },
+  { key: '만세력', title: '만세력 판독', subtitle: 'Birth Chart', markers: ['1. 만세력 판독 요약', '1.', '만세력 판독'] },
+  { key: '원국', title: '원국 핵심', subtitle: 'Core Structure', markers: ['2. 원국 핵심 구조', '2.', '원국 핵심'] },
+  { key: '나이별', title: '나이별 운세', subtitle: 'Life Timeline', markers: ['3. 평생 총운', '3.', '평생 총운'] },
+  { key: '금전', title: '금전운', subtitle: 'Wealth', markers: ['4. 금전운', '4.', '금전운'] },
+  { key: '직업', title: '직업운', subtitle: 'Career', markers: ['5. 직업운', '5.', '직업운'] },
+  { key: '연애', title: '연애운', subtitle: 'Love', markers: ['6. 연애운', '6.', '연애운'] },
+  { key: '결혼', title: '결혼운', subtitle: 'Marriage', markers: ['7. 결혼운', '7.', '결혼운'] },
 ];
 
 function parseAnalysisSections(text) {
@@ -22,9 +22,9 @@ function parseAnalysisSections(text) {
   let currentKey = null;
 
   for (const line of lines) {
-    const lowerLine = line.replace(/[#*]/g, '').trim();
+    const cleanLine = line.replace(/[#*]/g, '').trim();
     for (const card of CARD_CONFIG) {
-      if (card.markers.some(m => lowerLine.startsWith(m))) {
+      if (card.markers.some(m => cleanLine.startsWith(m))) {
         currentKey = card.key;
         sections[currentKey] = '';
         break;
@@ -35,83 +35,115 @@ function parseAnalysisSections(text) {
     }
   }
 
-  // 파싱 실패 시 전체 텍스트를 만세력에 넣기
   if (Object.keys(sections).length === 0) {
     sections['만세력'] = text;
   }
-
   return sections;
 }
 
 function cleanText(text) {
   if (!text) return '';
-  return text
-    .replace(/\*\*/g, '')
-    .replace(/^#+\s*/gm, '')
-    .replace(/^[-*]\s*/gm, '• ')
-    .trim();
+  return text.replace(/\*\*/g, '').replace(/^#+\s*/gm, '').replace(/^[-*]\s*/gm, '• ').trim();
 }
 
-function FlipCard({ card, content, index }) {
+function TarotCard({ card, content }) {
   const [flipped, setFlipped] = useState(false);
   const cleaned = cleanText(content);
+  const img = cardImages[card.key];
 
   return (
     <div
-      className="cursor-pointer"
-      style={{ perspective: '1000px' }}
+      className="cursor-pointer group"
+      style={{ perspective: '1200px' }}
       onClick={() => setFlipped(!flipped)}
     >
       <div
-        className="relative w-full transition-transform duration-700"
+        className="relative transition-transform duration-700 ease-in-out"
         style={{
           transformStyle: 'preserve-3d',
           transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-          minHeight: flipped ? 'auto' : '200px',
-          height: flipped ? 'auto' : '200px',
         }}
       >
-        {/* 앞면 */}
+        {/* 앞면 - 타로카드 스타일 */}
         <div
-          className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${card.color} border border-white/10 flex flex-col items-center justify-center gap-4 p-6`}
-          style={{ backfaceVisibility: 'hidden' }}
+          className="w-full rounded-2xl overflow-hidden border-2 border-amber-400/20 shadow-2xl"
+          style={{ backfaceVisibility: 'hidden', aspectRatio: '2/3' }}
         >
-          <div className="text-4xl md:text-5xl">{card.icon}</div>
-          <h3 className="text-lg md:text-xl font-bold text-white/90">{card.title}</h3>
-          <p className="text-xs text-white/30">카드를 클릭하여 내용을 확인하세요</p>
+          <div className="relative w-full h-full">
+            <img src={img} className="absolute inset-0 w-full h-full object-cover" alt="" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
+
+            {/* 타로카드 프레임 */}
+            <div className="absolute inset-3 md:inset-4 border border-amber-400/30 rounded-xl" />
+            <div className="absolute inset-5 md:inset-6 border border-amber-400/15 rounded-lg" />
+
+            {/* 상단 장식 */}
+            <div className="absolute top-4 md:top-6 inset-x-0 text-center">
+              <p className="text-[9px] md:text-[10px] tracking-[0.4em] text-amber-200/40">{card.subtitle}</p>
+            </div>
+
+            {/* 중앙 타이틀 */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 rounded-full bg-black/40 backdrop-blur-sm border border-amber-400/30 flex items-center justify-center">
+                  <span className="text-amber-200/80 text-2xl md:text-3xl font-bold">{card.title.charAt(0)}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 하단 타이틀 */}
+            <div className="absolute bottom-4 md:bottom-6 inset-x-0 text-center">
+              <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">{card.title}</h3>
+              <p className="text-[10px] text-amber-200/40 mt-1 tracking-wider">TAP TO REVEAL</p>
+            </div>
+
+            {/* 호버 효과 */}
+            <div className="absolute inset-0 bg-amber-400/0 group-hover:bg-amber-400/5 transition-colors duration-300 rounded-2xl" />
+          </div>
         </div>
 
-        {/* 뒷면 */}
+        {/* 뒷면 - 내용 */}
         <div
-          className={`rounded-2xl bg-gradient-to-br ${card.color} border border-white/10 p-6 md:p-8`}
+          className="absolute top-0 left-0 w-full rounded-2xl overflow-hidden border-2 border-amber-400/20 bg-[#0e0c08] shadow-2xl"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
-            minHeight: '200px',
+            minHeight: '100%',
           }}
         >
-          <div className="flex items-center gap-3 mb-5">
-            <span className="text-2xl">{card.icon}</span>
-            <h3 className="text-lg font-bold text-white/90">{card.title}</h3>
-          </div>
-          {cleaned ? (
-            <div className="space-y-2">
-              {cleaned.split('\n').filter(l => l.trim()).map((line, i) => {
-                if (line.startsWith('• ')) {
-                  return (
-                    <div key={i} className="flex gap-2 text-sm text-white/60 leading-relaxed">
-                      <span className="text-amber-400/50 shrink-0 mt-0.5">◆</span>
-                      <span>{line.slice(2)}</span>
-                    </div>
-                  );
-                }
-                return <p key={i} className="text-sm text-white/60 leading-relaxed">{line}</p>;
-              })}
+          {/* 상단 이미지 헤더 */}
+          <div className="relative h-28 md:h-36">
+            <img src={img} className="w-full h-full object-cover" alt="" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-[#0e0c08]" />
+            <div className="absolute bottom-4 left-5 right-5">
+              <p className="text-[9px] tracking-[0.3em] text-amber-300/40">{card.subtitle}</p>
+              <h3 className="text-xl font-bold text-white">{card.title}</h3>
             </div>
-          ) : (
-            <p className="text-sm text-white/30">해당 분석 내용이 없습니다.</p>
-          )}
-          <p className="text-xs text-white/20 mt-4 text-center">카드를 클릭하여 닫기</p>
+          </div>
+
+          {/* 내용 */}
+          <div className="p-5 md:p-6">
+            {cleaned ? (
+              <div className="space-y-2.5">
+                {cleaned.split('\n').filter(l => l.trim()).map((line, i) => {
+                  if (line.startsWith('• ')) {
+                    return (
+                      <div key={i} className="flex gap-2.5 text-sm text-white/55 leading-relaxed">
+                        <span className="text-amber-400/40 shrink-0 mt-0.5">◆</span>
+                        <span>{line.slice(2)}</span>
+                      </div>
+                    );
+                  }
+                  return <p key={i} className="text-sm text-white/55 leading-relaxed">{line}</p>;
+                })}
+              </div>
+            ) : (
+              <p className="text-sm text-white/25">해당 분석 내용이 없습니다.</p>
+            )}
+            <div className="mt-5 pt-4 border-t border-white/5 text-center">
+              <p className="text-[10px] text-amber-400/30 tracking-wider">TAP TO CLOSE</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -153,10 +185,12 @@ function QuestionBox({ manseryeok }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/80" />
       <div className="relative z-10 p-6 md:p-8">
         <div className="flex items-center gap-3 mb-5">
-          <span className="text-2xl">✍️</span>
-          <h3 className="text-lg font-bold text-white/90">궁금한 것이 있나요?</h3>
+          <div className="w-10 h-10 rounded-full bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-lg">✍</div>
+          <div>
+            <h3 className="text-lg font-bold text-white/90">궁금한 것이 있나요?</h3>
+            <p className="text-xs text-white/30">사주에 대해 한 가지 질문을 할 수 있습니다</p>
+          </div>
         </div>
-        <p className="text-sm text-white/40 mb-4">사주에 대해 한 가지 질문을 할 수 있습니다.</p>
         <div className="flex gap-2">
           <input
             type="text"
@@ -206,7 +240,7 @@ export default function SajuResultPage() {
 
   return (
     <div className="min-h-screen py-8 px-4">
-      <div className="max-w-[680px] lg:max-w-[900px] mx-auto space-y-8">
+      <div className="max-w-[680px] lg:max-w-[960px] mx-auto space-y-10">
 
         {/* 사주팔자 히어로 */}
         <div className="rounded-[2rem] overflow-hidden border border-white/5 bg-[#0c0a06]">
@@ -223,19 +257,21 @@ export default function SajuResultPage() {
               </div>
             </div>
           </div>
-
-          {/* 오행 분포 */}
           <div className="p-6 md:p-8">
             <OhengChart distribution={manseryeok.오행분포} />
           </div>
         </div>
 
-        {/* 카드 그리드 */}
+        {/* 타로카드 그리드 */}
         <div>
-          <p className="text-center text-xs text-white/30 mb-6 tracking-wider">카드를 클릭하면 상세 분석이 나타납니다</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {CARD_CONFIG.map((card, i) => (
-              <FlipCard key={card.key} card={card} content={sections[card.key]} index={i} />
+          <div className="text-center mb-8">
+            <p className="text-[10px] tracking-[0.5em] text-amber-400/30 mb-2">FORTUNE CARDS</p>
+            <h2 className="text-xl md:text-2xl font-bold text-white/80">당신의 운명 카드</h2>
+            <p className="text-xs text-white/25 mt-2">카드를 터치하면 운명이 드러납니다</p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            {CARD_CONFIG.map((card) => (
+              <TarotCard key={card.key} card={card} content={sections[card.key]} />
             ))}
           </div>
         </div>
@@ -243,7 +279,7 @@ export default function SajuResultPage() {
         {/* 질문 박스 */}
         <QuestionBox manseryeok={manseryeok} />
 
-        {/* 다시 보기 */}
+        {/* 하단 */}
         <div className="text-center pb-8">
           <Link to="/saju" className="text-amber-400/40 text-sm hover:text-amber-400/70 transition">← 다른 사주 보기</Link>
         </div>

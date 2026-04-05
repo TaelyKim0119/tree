@@ -16,6 +16,11 @@ import stonesSpiral from '../assets/images/edz-norton-lVd5b63876g-unsplash.jpg';
 import waterfallImg from '../assets/images/nathan-anderson-ZjOQmOOWmGs-unsplash.jpg';
 import stonesColor from '../assets/images/sung-jin-cho-0d3qxUozE-0-unsplash.jpg';
 import lake from '../assets/images/aoi-YqCEuz8YFbA-unsplash.jpg';
+import cardMoney from '../assets/images/alexander-grey-8lnbXtxFGZw-unsplash.jpg';
+import cardJob from '../assets/images/clem-onojeghuo-fY8Jr4iuPQM-unsplash.jpg';
+import cardMarriage from '../assets/images/drew-coffman-llWjwo200fo-unsplash.jpg';
+import cardAge from '../assets/images/martin-reisch-y6fTK4k2J6c-unsplash.jpg';
+import cardLove from '../assets/images/michael-fenton-0ZQ8vojHNuc-unsplash.jpg';
 
 export const cheonganImage = {
   '甲': treeBig, '乙': treeSmall,
@@ -44,4 +49,14 @@ export const bgImages = {
   stonesColor,
   lake,
   penBook,
+};
+
+export const cardImages = {
+  만세력: stonesSpiral,
+  원국: stonesColor,
+  나이별: cardAge,
+  금전: cardMoney,
+  직업: cardJob,
+  연애: cardLove,
+  결혼: cardMarriage,
 };
