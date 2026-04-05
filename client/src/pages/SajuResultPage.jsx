@@ -6,31 +6,31 @@ import { bgImages, ohengImage, cardImages } from '../utils/imageMap';
 import penBook from '../assets/images/aaron-burden-CKlHKtCJZKk-unsplash.jpg';
 
 const CARD_CONFIG = [
-  { key: '만세력', title: '만세력 판독', subtitle: 'Birth Chart', markers: ['1. 만세력 판독 요약', '1.', '만세력 판독'] },
-  { key: '원국', title: '원국 핵심', subtitle: 'Core Structure', markers: ['2. 원국 핵심 구조', '2.', '원국 핵심'] },
-  { key: '장단점', title: '장점과 단점', subtitle: 'Strengths & Weaknesses', markers: ['타고난 강점', '치명적 약점', '강점', '약점'] },
-  { key: '나이별', title: '나이별 운세', subtitle: 'Life Timeline', markers: ['3. 평생 총운', '3.', '평생 총운'] },
-  { key: '금전', title: '금전운', subtitle: 'Wealth', markers: ['4. 금전운', '4.', '금전운'] },
-  { key: '직업', title: '직업운', subtitle: 'Career', markers: ['5. 직업운', '5.', '직업운'] },
-  { key: '연애', title: '연애운', subtitle: 'Love', markers: ['6. 연애운', '6.', '연애운'] },
-  { key: '결혼', title: '결혼운', subtitle: 'Marriage', markers: ['7. 결혼운', '7.', '결혼운'] },
+  { key: '만세력', title: '만세력 판독', subtitle: 'Birth Chart', markers: ['1. 만세력 판독 요약', '1. 만세력'] },
+  { key: '원국', title: '원국 핵심', subtitle: 'Core Structure', markers: ['2. 원국 핵심 구조', '2. 원국'] },
+  { key: '장단점', title: '장점과 단점', subtitle: 'Strengths & Weaknesses', markers: ['3. 장점과 단점', '3. 장점'] },
+  { key: '나이별', title: '나이별 운세', subtitle: 'Life Timeline', markers: ['4. 평생 총운', '4. 평생'] },
+  { key: '금전', title: '금전운', subtitle: 'Wealth', markers: ['5. 금전운', '5. 금전'] },
+  { key: '직업', title: '직업운', subtitle: 'Career', markers: ['6. 직업운', '6. 직업'] },
+  { key: '연애', title: '연애운', subtitle: 'Love', markers: ['7. 연애운', '7. 연애'] },
+  { key: '결혼', title: '결혼운', subtitle: 'Marriage', markers: ['8. 결혼운', '8. 결혼'] },
 ];
 
 // 모든 섹션 마커 (순서대로) — 카드에 포함 안 되는 섹션도 구분용으로 추가
 const ALL_SECTION_MARKERS = [
-  { key: '만세력', patterns: ['1. 만세력 판독 요약', '1. 만세력', '만세력 판독 요약'] },
-  { key: '원국', patterns: ['2. 원국 핵심 구조', '2. 원국', '원국 핵심 구조'] },
-  { key: '장단점', patterns: ['타고난 강점', '강점과 약점', '치명적 약점'] },
-  { key: '나이별', patterns: ['3. 평생 총운', '3. 평생', '평생 총운'] },
-  { key: '금전', patterns: ['4. 금전운', '4. 금전'] },
-  { key: '직업', patterns: ['5. 직업운', '5. 직업'] },
-  { key: '연애', patterns: ['6. 연애운', '6. 연애'] },
-  { key: '결혼', patterns: ['7. 결혼운', '7. 결혼'] },
-  { key: '건강', patterns: ['8. 건강운', '8. 건강'] },
-  { key: '가족', patterns: ['9. 인간관계', '9. 가족', '인간관계/가족운'] },
-  { key: '대운', patterns: ['10. 대운', '10. 대운 상세'] },
-  { key: '세운', patterns: ['11. 세운', '11. 세운 핵심'] },
-  { key: '총평', patterns: ['12. 현실 조언', '12. 현실', '현실 조언 및 총평'] },
+  { key: '만세력', patterns: ['1. 만세력 판독 요약', '1. 만세력'] },
+  { key: '원국', patterns: ['2. 원국 핵심 구조', '2. 원국'] },
+  { key: '장단점', patterns: ['3. 장점과 단점', '3. 장점', '타고난 강점'] },
+  { key: '나이별', patterns: ['4. 평생 총운', '4. 평생'] },
+  { key: '금전', patterns: ['5. 금전운', '5. 금전'] },
+  { key: '직업', patterns: ['6. 직업운', '6. 직업'] },
+  { key: '연애', patterns: ['7. 연애운', '7. 연애'] },
+  { key: '결혼', patterns: ['8. 결혼운', '8. 결혼'] },
+  { key: '건강', patterns: ['9. 건강운', '9. 건강'] },
+  { key: '가족', patterns: ['10. 인간관계', '10. 가족'] },
+  { key: '대운', patterns: ['11. 대운 상세', '11. 대운'] },
+  { key: '세운', patterns: ['12. 세운 핵심', '12. 세운'] },
+  { key: '총평', patterns: ['13. 현실 조언', '13. 현실'] },
 ];
 
 function parseAnalysisSections(text) {
