@@ -12,16 +12,26 @@ export default function SajuInputPage() {
   const [name, setName] = useState('');
   const [gender, setGender] = useState('남');
   const [calendarType, setCalendarType] = useState('양력');
-  const [year, setYear] = useState(1990);
-  const [month, setMonth] = useState(1);
-  const [day, setDay] = useState(1);
+  const [year, setYear] = useState('1990');
+  const [month, setMonth] = useState('1');
+  const [day, setDay] = useState('1');
   const [hour, setHour] = useState(12);
   const [loading, setLoading] = useState(false);
 
+  const clamp = (val, min, max) => {
+    const n = Number(val);
+    if (isNaN(n) || val === '') return min;
+    return Math.min(max, Math.max(min, n));
+  };
+
   const handleSubmit = async () => {
+    const y = clamp(year, 1940, 2040);
+    const m = clamp(month, 1, 12);
+    const d = clamp(day, 1, 31);
+    setYear(String(y)); setMonth(String(m)); setDay(String(d));
     setLoading(true);
     try {
-      const manseryeok = calculateManseryeok(year, month, day, hour);
+      const manseryeok = calculateManseryeok(y, m, d, hour);
       const ohengDist = getOhengDistribution(manseryeok);
       const sipsin = analyzeSipsin(manseryeok);
       const singang = getSingang(manseryeok, ohengDist);
@@ -128,15 +138,15 @@ export default function SajuInputPage() {
             <label className={labelClass}>생년월일</label>
             <div className="grid grid-cols-3 gap-3">
               <div className="relative">
-                <input type="number" min="1940" max="2040" value={year} onChange={e => setYear(Number(e.target.value))} className={inputClass} />
+                <input type="number" inputMode="numeric" min="1940" max="2040" value={year} onChange={e => setYear(e.target.value)} onBlur={() => setYear(String(clamp(year, 1940, 2040)))} className={inputClass} />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 text-xs pointer-events-none">년</span>
               </div>
               <div className="relative">
-                <input type="number" min="1" max="12" value={month} onChange={e => setMonth(Math.min(12, Math.max(1, Number(e.target.value))))} className={inputClass} />
+                <input type="number" inputMode="numeric" min="1" max="12" value={month} onChange={e => setMonth(e.target.value)} onBlur={() => setMonth(String(clamp(month, 1, 12)))} className={inputClass} />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 text-xs pointer-events-none">월</span>
               </div>
               <div className="relative">
-                <input type="number" min="1" max="31" value={day} onChange={e => setDay(Math.min(31, Math.max(1, Number(e.target.value))))} className={inputClass} />
+                <input type="number" inputMode="numeric" min="1" max="31" value={day} onChange={e => setDay(e.target.value)} onBlur={() => setDay(String(clamp(day, 1, 31)))} className={inputClass} />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 text-xs pointer-events-none">일</span>
               </div>
             </div>

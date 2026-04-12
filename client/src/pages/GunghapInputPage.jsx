@@ -6,10 +6,12 @@ import { calculateManseryeok } from '../utils/manseryeok';
 import { getOhengDistribution, getSingang, getYongsin } from '../utils/oheng';
 
 function PersonForm({ label, person, onChange }) {
-  const years = Array.from({ length: 101 }, (_, i) => 1940 + i);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const update = (key, val) => onChange({ ...person, [key]: val });
+  const clamp = (val, min, max) => {
+    const n = Number(val);
+    if (isNaN(n) || val === '') return min;
+    return Math.min(max, Math.max(min, n));
+  };
   return (
     <div>
       <h3 className="text-amber-400/60 text-sm font-semibold mb-4">{label}</h3>
@@ -21,17 +23,20 @@ function PersonForm({ label, person, onChange }) {
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div className="relative">
-            <input type="number" min="1940" max="2040" value={person.year} onChange={e => update('year', Number(e.target.value))}
+            <input type="number" inputMode="numeric" min="1940" max="2040" value={person.year} onChange={e => update('year', e.target.value)}
+              onBlur={() => update('year', clamp(person.year, 1940, 2040))}
               className="w-full py-2.5 px-2 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40" />
             <span className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400/30 text-[10px] pointer-events-none">년</span>
           </div>
           <div className="relative">
-            <input type="number" min="1" max="12" value={person.month} onChange={e => update('month', Math.min(12, Math.max(1, Number(e.target.value))))}
+            <input type="number" inputMode="numeric" min="1" max="12" value={person.month} onChange={e => update('month', e.target.value)}
+              onBlur={() => update('month', clamp(person.month, 1, 12))}
               className="w-full py-2.5 px-2 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40" />
             <span className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400/30 text-[10px] pointer-events-none">월</span>
           </div>
           <div className="relative">
-            <input type="number" min="1" max="31" value={person.day} onChange={e => update('day', Math.min(31, Math.max(1, Number(e.target.value))))}
+            <input type="number" inputMode="numeric" min="1" max="31" value={person.day} onChange={e => update('day', e.target.value)}
+              onBlur={() => update('day', clamp(person.day, 1, 31))}
               className="w-full py-2.5 px-2 bg-[#1a1610] border border-amber-400/15 rounded-xl text-white text-sm text-center focus:outline-none focus:border-amber-400/40" />
             <span className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-400/30 text-[10px] pointer-events-none">일</span>
           </div>
@@ -59,12 +64,12 @@ function PersonForm({ label, person, onChange }) {
 
 export default function GunghapInputPage() {
   const navigate = useNavigate();
-  const [person1, setPerson1] = useState({ gender: '남', year: 1990, month: 1, day: 1, hour: 12 });
-  const [person2, setPerson2] = useState({ gender: '여', year: 1992, month: 1, day: 1, hour: 12 });
+  const [person1, setPerson1] = useState({ gender: '남', year: '1990', month: '1', day: '1', hour: 12 });
+  const [person2, setPerson2] = useState({ gender: '여', year: '1992', month: '1', day: '1', hour: 12 });
   const [loading, setLoading] = useState(false);
 
   function analyzePerson(p) {
-    const m = calculateManseryeok(p.year, p.month, p.day, p.hour);
+    const m = calculateManseryeok(Number(p.year), Number(p.month), Number(p.day), p.hour);
     const oh = getOhengDistribution(m);
     const sg = getSingang(m, oh);
     const yg = getYongsin(sg, CHEONGAN_OHENG[m.day.cheongan]);
